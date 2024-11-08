@@ -1,0 +1,13 @@
+.navbar {
+    background-image: url(https://static.videezy.com/system/resources/thumbnails/000/042/456/original/Sky-night-rotation-space-background.jpg) ;
+}
+.logoStarWars {
+    margin-left: 1rem;
+    max-width: 200px;
+    max-height: 100px;
+    transition: box-shadow 0.3s ease-in-out; /* Suaviza la transición de la sombra */
+}
+
+.logoStarWars:hover {
+    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.6); /* Sombra amarilla difusa */
+}
