@@ -1,70 +1,65 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
+import {Link} from 'react-router-dom';
 import { Card, Col, Button, Row } from "react-bootstrap";
-import './Planets.css';
 import { Context } from "../store/appContext";
 
 const Planets = () => {
   const { store, actions } = useContext(Context);
-  const { planets, loading, error, nextPage } = store;
-  
-  const [loaded, setLoaded] = useState(false);
+  const { planets, planetsLoading, error, nextPage } = store;
 
   useEffect(() => {
-    if (!loaded && store.planets.length === 0) {
+    if (planets.length === 0 && !planetsLoading) {
       actions.loadPlanets();
-      setLoaded(true);
     }
-  }, [store.planets, loaded, actions]);
+  }, [planets, planetsLoading, actions]);
 
-  if (loading && !planets.length) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (planetsLoading && planets.length === 0) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container-fluid">
-      <div className="h3 text-danger" style={{ marginTop: "1rem", marginBottom: "1rem", textAlign: "left" }}>
-        Planets
+      <div className="text-center mb-4">
+        <a href="https://fontmeme.com/star-wars-font/">
+          <img
+            src="https://fontmeme.com/permalink/241109/6fcda42f2a0a20da6c28989802ef9401.png"
+            alt="star-wars-font"
+          />
+        </a>
       </div>
 
-      <div id="containerPlanets" className="scrollablePlanets">
+      <div className="scrollablePlanets">
         <Row>
           {planets.map((planet) => (
-            <Col xs={12} sm={6} md={4} lg={3} key={character.url} style={{ marginBottom: "20px" }}>
-              <Card>
+            <Col xs={12} sm={6} md={4} lg={3} key={planet.id} className="mb-3">
+              <Card className="bg-dark">
                 <div className="imageContainer">
                   <Card.Img
+                    src={planet.imgSrc || "https://via.placeholder.com/200x200?text=No+Image"}
                     className="zoomImage"
                     variant="top"
-                    src={planet.imgSrc || "https://via.placeholder.com/200x200?text=No+Image"}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "contain",
-                      backgroundColor: "#000",
-                    }}
                   />
                 </div>
                 <Card.Body>
-                  <Card.Title>{planet.name}</Card.Title>
+                  <Card.Title className="text-warning">{planet.name}</Card.Title>
                   <Card.Text>
-                    <span className="d-block text-left">Gender: {character.gender || "Loading..."}</span>
-                    <span className="d-block text-left">Hair: {character.hair_color || "Loading..."}</span>
-                    <span className="d-block text-left">Eye-Color: {character.eye_color || "Loading..."}</span>
+                    <span>Terrain: {planet.terrain || "Loading..."}</span>
+                    <br />
+                    <span>Population: {planet.population || "Loading..."}</span>
                   </Card.Text>
-                  <div style={{ display: "flex", justifyContent: "space-around" }}>
-                    <button type="button" className="btn btn-outline-primary">Primary</button>
-                    {/* Cambiar el color del ícono de favorito */}
-                    <button 
-                      type="button" 
-                      className={`btn ${planet.favorite ? 'btn-danger' : 'btn-warning'}`} 
-                      onClick={() => actions.toggleFavorite(character.url)}
+                  <div className="d-flex justify-content-around">
+                    <Link to = {`/LearnMorePlanet/${planet.id}`}>
+                      <Button variant="outline-primary">Learn More</Button>
+                    </Link>
+                    <a
+                      href="#"
+                      className={`fa fa-heart ${planet.favorite ? 'text-danger' : 'text-warning'} link-danger link-offset-2 text-decoration-none fs-2`}
+                      onClick={(e) => {
+                        e.preventDefault(); 
+                        actions.toggleFavorite(planet.id, "planets"); 
+                      }}
                     >
-                      <i className="fa fa-heart" />
-                    </button>
+                    </a>
+
                   </div>
                 </Card.Body>
               </Card>
@@ -73,14 +68,9 @@ const Planets = () => {
         </Row>
 
         {nextPage && (
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <Button
-              variant="primary"
-              onClick={actions.loadCharacters}
-              disabled={loading}
-              style={{ padding: "10px 20px", fontSize: "1rem" }}
-            >
-              {loading ? "Loading..." : "Load More"}
+          <div className="text-center mt-3">
+            <Button onClick={() => actions.loadPlanets()} disabled={planetsLoading}>
+              {planetsLoading ? "Loading..." : "Load More"}
             </Button>
           </div>
         )}

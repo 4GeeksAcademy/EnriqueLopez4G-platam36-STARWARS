@@ -10,7 +10,7 @@ export const Navbar = () => {
     const { favorites, favoritesCount } = store;  // Acceder a los favoritos globalmente
 
     return (
-        <nav className="navbar navbar-light bg-light mb-3">
+        <nav className="navbar navbar-light bg-light">
             <Link to="/">
                 <span className="navbar-brand mb-0 h1">
                     <img
@@ -33,12 +33,11 @@ export const Navbar = () => {
                     
                         {favorites.length > 0 ? (
                             <>
-                          {/* Imprimir la categoría del primer elemento */}
                                 {favorites.map((item) => (
-                                <Dropdown.Item key={item.url} className="d-flex justify-content-between align-items-center">
+                                <Dropdown.Item key={item.id} className="d-flex justify-content-between align-items-center">
                                     <span>{item.name}</span>
                                     <FaTrash
-                                        onClick={() => actions.removeFavorite(item.url, 'people')}  // Pasamos la categoría
+                                        onClick={() => actions.removeFavorite(item.id, item.category)}  // Pasamos la categoría
                                         style={{ cursor: "pointer", color: "red", marginLeft: "10px" }}
                                     />
                                 </Dropdown.Item>

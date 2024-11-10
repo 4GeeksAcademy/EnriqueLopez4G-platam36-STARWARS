@@ -1,3 +1,11 @@
 /* 
     General Styles
 */
+/* index.css o App.css */
+body {
+    background-image: url("https://static.videezy.com/system/resources/thumbnails/000/042/456/original/Sky-night-rotation-space-background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: white; /* Asegura la visibilidad del texto */
+}
