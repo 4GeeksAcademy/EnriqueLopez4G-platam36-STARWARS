@@ -30,22 +30,21 @@ export const Navbar = () => {
                     <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
                     <Dropdown.Menu align="end">
-                    
                         {favorites.length > 0 ? (
                             <>
-                                {favorites.map((item) => (
+                            {favorites.map((item) => (
                                 <Dropdown.Item key={item.id} className="d-flex justify-content-between align-items-center">
-                                    <span>{item.name}</span>
-                                    <FaTrash
-                                        onClick={() => actions.removeFavorite(item.id, item.category)}  // Pasamos la categoría
-                                        style={{ cursor: "pointer", color: "red", marginLeft: "10px" }}
-                                    />
+                                <span>{item.name}</span>  {/* Ahora mostramos el name del favorito */}
+                                <FaTrash
+                                    onClick={() => actions.removeFavorite(item.id, item.category)}  // Usamos id y category
+                                    style={{ cursor: "pointer", color: "red", marginLeft: "10px" }}
+                                />
                                 </Dropdown.Item>
-                                ))}
-                                <Dropdown.Divider />
-                                <Dropdown.Item onClick={() => actions.clearFavorites()} className="text-danger">
-                                    Clear Favorites
-                                </Dropdown.Item>
+                            ))}
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={() => actions.clearFavorites()} className="text-danger">
+                                Clear Favorites
+                            </Dropdown.Item>
                             </>
                         ) : (
                             <Dropdown.Item disabled>No favorites yet</Dropdown.Item>

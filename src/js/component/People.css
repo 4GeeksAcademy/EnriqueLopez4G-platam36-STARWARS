@@ -1,0 +1,30 @@
+#containerPeople {
+    position: relative;
+    padding-bottom: 60px; /* Deja espacio para el botón de Load More */
+  }
+  
+  .scrollableCharacters {
+    overflow-y: auto;
+    max-height: 520px; /* Ajusta la altura a la cantidad de tarjetas que deseas mostrar. */
+    padding-right: 20px; /* Espacio adicional si el scroll es visible */
+    position: relative;
+    z-index: 0;
+    
+  }
+  
+  .card {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    z-index: 1;
+    pointer-events: none; /* Evita que se bloqueen los clicks en el contenido */
+  }
+  

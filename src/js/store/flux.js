@@ -84,6 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       toggleFavorite: (id, category) => {
         const store = getStore();
         
+        // Actualizar la categoría correcta
         const updatedCategory = store[category].map(item =>
           item.id === id ? { ...item, favorite: !item.favorite } : item
         );
@@ -92,11 +93,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           [category]: updatedCategory
         });
 
+        // Obtener los elementos favoritos con todos sus detalles
         const updatedFavorites = [
           ...store.people.filter(person => person.favorite),
           ...store.planets.filter(planet => planet.favorite)
         ];
 
+        // Almacenamos todo el objeto del favorito en lugar de solo el id y category
         setStore({
           favorites: updatedFavorites,
           favoritesCount: updatedFavorites.length
@@ -105,18 +108,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       removeFavorite: (id, category) => {
         const store = getStore();
+
+        // Remover el elemento de la categoría específica
         const updatedCategory = store[category].map(item =>
           item.id === id ? { ...item, favorite: false } : item
         );
 
-        const updatedFavorites = store.favorites.filter(item => item.id !== id);
+        setStore({
+          [category]: updatedCategory
+        });
+
+        // Filtrar la lista de favoritos para eliminar el ítem correcto
+        const updatedFavorites = store.favorites.filter(fav => !(fav.id === id && fav.category === category));
 
         setStore({
-          [category]: updatedCategory,
           favorites: updatedFavorites,
-          favoritesCount: updatedFavorites.length,
+          favoritesCount: updatedFavorites.length
         });
       },
+
 
       clearFavorites: () => {
         const store = getStore();

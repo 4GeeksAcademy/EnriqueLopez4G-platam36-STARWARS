@@ -1,7 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Card, Col, Button, Row } from "react-bootstrap";
 import { Context } from "../store/appContext";
+import './Planets.css';
 
 const Planets = () => {
   const { store, actions } = useContext(Context);
@@ -17,7 +18,7 @@ const Planets = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="containerPlanets">
       <div className="text-center mb-4">
         <a href="https://fontmeme.com/star-wars-font/">
           <img
@@ -26,6 +27,9 @@ const Planets = () => {
           />
         </a>
       </div>
+
+      {/* Overlay para oscurecer el fondo si es necesario */}
+      <div className="overlay"></div>
 
       <div className="scrollablePlanets">
         <Row>
@@ -47,19 +51,17 @@ const Planets = () => {
                     <span>Population: {planet.population || "Loading..."}</span>
                   </Card.Text>
                   <div className="d-flex justify-content-around">
-                    <Link to = {`/LearnMorePlanet/${planet.id}`}>
+                    <Link to={`/LearnMorePlanet/${planet.id}`}>
                       <Button variant="outline-primary">Learn More</Button>
                     </Link>
                     <a
                       href="#"
-                      className={`fa fa-heart ${planet.favorite ? 'text-danger' : 'text-warning'} link-danger link-offset-2 text-decoration-none fs-2`}
+                      className={`fa fa-heart ${planet.favorite ? "text-danger" : "text-warning"} link-danger link-offset-2 text-decoration-none fs-2`}
                       onClick={(e) => {
-                        e.preventDefault(); 
-                        actions.toggleFavorite(planet.id, "planets"); 
+                        e.preventDefault();
+                        actions.toggleFavorite(planet.id, "planets");
                       }}
-                    >
-                    </a>
-
+                    />
                   </div>
                 </Card.Body>
               </Card>

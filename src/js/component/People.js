@@ -1,12 +1,12 @@
 import React, { useEffect, useContext } from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Card, Col, Button, Row } from "react-bootstrap";
 import { Context } from "../store/appContext";
+import './People.css';
 
 const People = () => {
   const { store, actions } = useContext(Context);
   const { people, peopleLoading, error, nextPage } = store;
-
 
   useEffect(() => {
     if (!people.length) {
@@ -23,7 +23,7 @@ const People = () => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="containerPeople">
       <h3 className="text-center text-danger mb-3">
         <a href="https://fontmeme.com/star-wars-font/">
           <img
@@ -32,11 +32,15 @@ const People = () => {
           />
         </a>
       </h3>
+
+      {/* Overlay que cubre el contenedor */}
+      <div className="overlay"></div>
+
       <div id="containerCharacters" className="scrollableCharacters">
         <Row>
           {people.map((character) => (
             <Col xs={12} sm={6} md={4} lg={3} key={character.url} className="mb-4">
-              <Card className = "rounded-lg">
+              <Card className="rounded-lg">
                 <div className="imageContainer">
                   <Card.Img
                     variant="top"
@@ -51,24 +55,24 @@ const People = () => {
                     <span>Eye Color: {character.eye_color || "Loading..."}</span>
                   </Card.Text>
                   <div className="d-flex justify-content-around">
-                    <Link to= {`/LearnMorePeople/${character.id}` }>
+                    <Link to={`/LearnMorePeople/${character.id}`}>
                       <Button variant="outline-primary">Learn More</Button>
                     </Link>
                     <a
                       href="#"
-                      className={`fa fa-heart ${character.favorite ? 'text-danger' : 'text-warning'} link-danger link-offset-2 text-decoration-none fs-2`}
+                      className={`fa fa-heart ${character.favorite ? "text-danger" : "text-warning"} link-danger link-offset-2 text-decoration-none fs-2`}
                       onClick={(e) => {
-                        e.preventDefault(); 
-                        actions.toggleFavorite(character.id, "people"); 
+                        e.preventDefault();
+                        actions.toggleFavorite(character.id, "people");
                       }}
-                    >
-                    </a>
+                    />
                   </div>
                 </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
+
         {nextPage && (
           <div className="text-center mt-4">
             <Button
