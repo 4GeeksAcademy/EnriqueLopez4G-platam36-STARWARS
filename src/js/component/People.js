@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Card, Col, Button, Row } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 import './People.css';
 
@@ -36,18 +36,19 @@ const People = () => {
       {/* Overlay que cubre el contenedor */}
       <div className="overlay"></div>
 
-      <div id="containerCharacters" className="scrollableCharacters">
-        <Row>
+      <div id="containerCharacters" className="d-flex overflow-auto flex-nowrap pb-5">
+        <div className="d-flex gap-3 mb-4">
           {people.map((character) => (
-            <Col xs={12} sm={6} md={4} lg={3} key={character.url} className="mb-4">
-              <Card className="rounded-lg">
+            <div className="cardContainer" key={character.url}>
+              <Card className="cardRounded d-flex flex-column justify-content-between">
                 <div className="imageContainer">
                   <Card.Img
                     variant="top"
                     src={character.imgSrc || "https://via.placeholder.com/200x200?text=No+Image"}
+                    className="customCardImg img-fluid"
                   />
                 </div>
-                <Card.Body className="bg-dark text-warning">
+                <Card.Body className="bg-dark text-warning p-3">
                   <Card.Title>{character.name}</Card.Title>
                   <Card.Text>
                     <span>Gender: {character.gender || "Loading..."}</span><br />
@@ -55,7 +56,7 @@ const People = () => {
                     <span>Eye Color: {character.eye_color || "Loading..."}</span>
                   </Card.Text>
                   <div className="d-flex justify-content-around">
-                    <Link to={`/LearnMorePeople/${character.id}`}>
+                    <Link to={`/LearnMorePeople/${character.superId}`}>
                       <Button variant="outline-primary">Learn More</Button>
                     </Link>
                     <a
@@ -63,15 +64,15 @@ const People = () => {
                       className={`fa fa-heart ${character.favorite ? "text-danger" : "text-warning"} link-danger link-offset-2 text-decoration-none fs-2`}
                       onClick={(e) => {
                         e.preventDefault();
-                        actions.toggleFavorite(character.id, "people");
+                        actions.toggleFavorite(character.superId, "people");
                       }}
                     />
                   </div>
                 </Card.Body>
               </Card>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
 
         {nextPage && (
           <div className="text-center mt-4">
@@ -79,6 +80,7 @@ const People = () => {
               variant="primary"
               onClick={actions.loadPeople}
               disabled={peopleLoading}
+              className="btn-lg rounded-pill shadow m-2"
             >
               {peopleLoading ? "Loading..." : "Load More"}
             </Button>

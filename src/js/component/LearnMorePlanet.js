@@ -15,7 +15,7 @@ const LearnMorePlanet = () => {
   format: 'plain',
  });
 
- const planet = planets.find(plan => plan.id === idPlanet);
+ const planet = planets.find(plan => plan.superId === idPlanet);
 
  useEffect(() => {}, [idPlanet]);
 

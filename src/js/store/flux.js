@@ -32,7 +32,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               imgSrc: `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`,
               favorite: false,
               category: 'people',
-              id: characterId
+              id: characterId,
+              superId:'people' + characterId
             };
           });
 
@@ -65,6 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               ...planet,
               id: planetId,
               category: 'planets',
+              superId : 'planets' + planetId,
               imgSrc: imgsPlanets[planetId].imgSrc,
               favorite: false,
             };
@@ -81,12 +83,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      toggleFavorite: (id, category) => {
+      toggleFavorite: (sid, category) => {
         const store = getStore();
         
         // Actualizar la categoría correcta
         const updatedCategory = store[category].map(item =>
-          item.id === id ? { ...item, favorite: !item.favorite } : item
+          item.superId === sid ? { ...item, favorite: !item.favorite } : item
         );
 
         setStore({
@@ -106,12 +108,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
-      removeFavorite: (id, category) => {
+      removeFavorite: (sid, category) => {
         const store = getStore();
 
         // Remover el elemento de la categoría específica
         const updatedCategory = store[category].map(item =>
-          item.id === id ? { ...item, favorite: false } : item
+          item.superId === sid ? { ...item, favorite: false } : item
         );
 
         setStore({
@@ -119,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
 
         // Filtrar la lista de favoritos para eliminar el ítem correcto
-        const updatedFavorites = store.favorites.filter(fav => !(fav.id === id && fav.category === category));
+        const updatedFavorites = store.favorites.filter(fav => !(fav.superId === sid && fav.category === category));
 
         setStore({
           favorites: updatedFavorites,

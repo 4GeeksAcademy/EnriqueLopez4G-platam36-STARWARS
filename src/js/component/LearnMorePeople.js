@@ -15,7 +15,7 @@ const LearnMorePeople = () => {
   format: 'plain',
  });
 
- const person = people.find(person => person.id === idPeople);
+ const person = people.find(person => person.superId === idPeople);
 
  useEffect(() => {}, [idPeople]);
 

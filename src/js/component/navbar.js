@@ -19,6 +19,8 @@ export const Navbar = () => {
                       alt="Star Wars"
                     />
                 </span>
+			    
+		
             </Link>
 
             <div className="ml-auto d-flex align-items-center" style={{ marginRight: "2rem" }}>
@@ -33,10 +35,10 @@ export const Navbar = () => {
                         {favorites.length > 0 ? (
                             <>
                             {favorites.map((item) => (
-                                <Dropdown.Item key={item.id} className="d-flex justify-content-between align-items-center">
+                                <Dropdown.Item key={item.superId} className="d-flex justify-content-between align-items-center">
                                 <span>{item.name}</span>  {/* Ahora mostramos el name del favorito */}
                                 <FaTrash
-                                    onClick={() => actions.removeFavorite(item.id, item.category)}  // Usamos id y category
+                                    onClick={() => actions.removeFavorite(item.superId, item.category)}  // Usamos id y category
                                     style={{ cursor: "pointer", color: "red", marginLeft: "10px" }}
                                 />
                                 </Dropdown.Item>
