@@ -41,7 +41,7 @@
   object-fit: cover; 
   min-height: 240px; /* Altura mínima de la imagen */
   min-width: 240px; 
-  width: 100%; /
+  width: 100%; 
   height: auto; 
 }
 
